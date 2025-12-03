@@ -718,7 +718,6 @@ class WebViewCtrl extends Gui.Custom {
         ResourceSize := DllCall("SizeofResource", "Ptr", Module, "Ptr", Resource)
         ResourceData := DllCall("LoadResource", "Ptr", Module, "Ptr", Resource, "Ptr")
         ConvertedData := DllCall("LockResource", "Ptr", ResourceData, "Ptr")
-        TextData := StrGet(ConvertedData, ResourceSize, "UTF-8")
 
         if (!DirExist(DestinationDir "\" OutDir)) {
             DirCreate(DestinationDir "\" OutDir)
@@ -735,7 +734,7 @@ class WebViewCtrl extends Gui.Custom {
         }
 
         if (!FileExist(DestinationDir "\" ResourceName)) {
-            TempFile := FileOpen(DestinationDir "\" ResourceName, "w")
+            TempFile := FileOpen(DestinationDir "\" ResourceName, "w", "CP0")
             TempFile.RawWrite(ConvertedData, ResourceSize)
             TempFile.Close()
             FileSetAttrib("+HR", DestinationDir "\" OutDir)
@@ -1222,4 +1221,5 @@ class WebViewCtrl extends Gui.Custom {
     ServerCertificateErrorDetected(Handler) => this.wv.add_ServerCertificateErrorDetected(Handler)
     FaviconChanged(Handler) => this.wv.add_FaviconChanged(Handler)
     LaunchingExternalUriScheme(Handler) => this.wv.add_LaunchingExternalUriScheme(Handler)
+
 }
